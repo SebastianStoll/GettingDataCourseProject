@@ -24,8 +24,7 @@ featureLabels$feature_label <- sub("-std\\(\\)-","Std",featureLabels$feature_lab
 featureLabels$feature_label <- sub("-std\\(\\)","Std",featureLabels$feature_label)
 
 # Loading and filtering of the test data. The results are merged with the loaded subject ids
-# and augmented by the activity labels. The input was checked for having the same size
-# and as ordering of the samples is given, columns were simply added.
+# and augmented by the activity labels.
 testSubjects <- read.table("./UCI HAR Dataset/test/subject_test.txt", header = FALSE, col.names = c("subject_key"))
 testSet <- read.table("./UCI HAR Dataset/test/X_test.txt", header = FALSE)
 testSet <- testSet[,featureLabels$feature_key]
@@ -33,8 +32,8 @@ colnames(testSet) <- featureLabels$feature_label
 testSet$subject_key <- testSubjects$subject_key
 
 testActivities <- read.table("./UCI HAR Dataset/test/y_test.txt", header = FALSE, col.names = c("activity_label_key"))
-testActivities <- inner_join(activityLabels, testActivities, by = "activity_label_key")
-testSet$activity_label <- testActivities$activity_label
+testSet$activity_label_key <- testActivities$activity_label_key
+testSet <- inner_join(testSet, activityLabels, by = "activity_label_key")
 
 # Repeating the same steps for the training data
 trainingSubjects <- read.table("./UCI HAR Dataset/train/subject_train.txt", header = FALSE, col.names = c("subject_key"))
@@ -44,10 +43,11 @@ colnames(trainingSet) <- featureLabels$feature_label
 trainingSet$subject_key <- trainingSubjects$subject_key
 
 trainActivities <- read.table("./UCI HAR Dataset/train/y_train.txt", header = FALSE, col.names = c("activity_label_key"))
-trainActivities <- inner_join(activityLabels, trainActivities, by = "activity_label_key")
-trainingSet$activity_label <- trainActivities$activity_label
+trainingSet$activity_label_key <- trainActivities$activity_label_key
+trainingSet <- inner_join(trainingSet, activityLabels, by = "activity_label_key")
 
-# Test and training data frames have the same columns and are unioned
+
+# Test and training data frames have the same column layout and are unioned
 runAnalysisData <- union(testSet, trainingSet)
 runAnalysisData$subject_key <- factor(runAnalysisData$subject_key)
 

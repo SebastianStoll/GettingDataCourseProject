@@ -15,6 +15,20 @@ Data is read using the *read.table* function. Column labels for the measurements
 
 Descriptive labels based on the *activity_labels.txt* are joined to each loaded data set. The subject keys are read from the respective files and are appended to the data sets.
 
+From the test data sets the files 
+* test/X_test.txt
+* test/y_test.txt
+* test/subject_test.txt
+
+were loaded, combined and joined with the and activity labels.
+
+From the training data sets the files 
+* test/X_train.txt
+* test/y_train.txt
+* test/subject_train.txt
+
+were loaded, combined and joined with the and activity labels.
+
 ### Merging the test and training data sets
 Both test and training data sets have the same column layout and can be combined into one data frame using the *union()* function of R.
 
@@ -30,11 +44,13 @@ The results are written out by the *write.table(..)* function to a file called *
 
 The output data file is named *subjectActivityAnalysis.txt*
 
-The file contains 40 rows and 68 columns.
+The file contains 180 rows and 68 columns.
 
 The first two columns are group columns over which the means were created. All remaining columns contain means for the features in question.
 
 Each record contains the means for all features in question and a specific activity done by an individual subject.
+
+There are 30 subjects in total which participated all in the six different activities.
 
 The following table provides a list of all columns in the data file.
 
