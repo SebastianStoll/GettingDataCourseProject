@@ -29,6 +29,13 @@ From the training data sets the files
 
 were loaded, combined and joined with the and activity labels.
 
+### Naming and naming transformations
+All names were transformed to apply to the widely used camel case notion starting with lowercase character. Especially regarding the long feature name I don't agree with using all lower case names without spaces as this does not contribute to readability.
+
+The general transformation used for the mean and standard deviation features is to remove brackets, dashses and to convert into a camel case notation. For the output data set the mean prefix was added e.g.
+
+      tBodyAcc-mean()-X -> tBodyAccMeanX -> meanTBodyAccMeanX
+
 ### Merging the test and training data sets
 Both test and training data sets have the same column layout and can be combined into one data frame using the *union()* function of R.
 
@@ -56,71 +63,71 @@ The following table provides a list of all columns in the data file.
 
 | Column Name  | Type | Description |
 |---|---|---|
-| activity_label   | group column   | The label of an activity that was done by a subject |
-| subject_key | group column  | The id of a subject |
-|MeantBodyAccMeanX| summary column |  mean of tBodyAccMeanX feature |
-|MeantBodyAccMeanY| summary column |  mean of tBodyAccMeanY feature |
-|MeantBodyAccMeanZ| summary column |  mean of tBodyAccMeanZ feature |
-|MeantBodyAccStdX| summary column |  mean of tBodyAccStdX feature |
-|MeantBodyAccStdY| summary column |  mean of tBodyAccStdY feature |
-|MeantBodyAccStdZ| summary column |  mean of tBodyAccStdZ feature |
-|MeantGravityAccMeanX| summary column |  mean of tGravityAccMeanX feature |
-|MeantGravityAccMeanY| summary column |  mean of tGravityAccMeanY feature |
-|MeantGravityAccMeanZ| summary column |  mean of tGravityAccMeanZ feature |
-|MeantGravityAccStdX| summary column |  mean of tGravityAccStdX feature |
-|MeantGravityAccStdY| summary column |  mean of tGravityAccStdY feature |
-|MeantGravityAccStdZ| summary column |  mean of tGravityAccStdZ feature |
-|MeantBodyAccJerkMeanX| summary column |  mean of tBodyAccJerkMeanX feature |
-|MeantBodyAccJerkMeanY| summary column |  mean of tBodyAccJerkMeanY feature |
-|MeantBodyAccJerkMeanZ| summary column |  mean of tBodyAccJerkMeanZ feature |
-|MeantBodyAccJerkStdX| summary column |  mean of tBodyAccJerkStdX feature |
-|MeantBodyAccJerkStdY| summary column |  mean of tBodyAccJerkStdY feature |
-|MeantBodyAccJerkStdZ| summary column |  mean of tBodyAccJerkStdZ feature |
-|MeantBodyGyroMeanX| summary column |  mean of tBodyGyroMeanX feature |
-|MeantBodyGyroMeanY| summary column |  mean of tBodyGyroMeanY feature |
-|MeantBodyGyroMeanZ| summary column |  mean of tBodyGyroMeanZ feature |
-|MeantBodyGyroStdX| summary column |  mean of tBodyGyroStdX feature |
-|MeantBodyGyroStdY| summary column |  mean of tBodyGyroStdY feature |
-|MeantBodyGyroStdZ| summary column |  mean of tBodyGyroStdZ feature |
-|MeantBodyGyroJerkMeanX| summary column |  mean of tBodyGyroJerkMeanX feature |
-|MeantBodyGyroJerkMeanY| summary column |  mean of tBodyGyroJerkMeanY feature |
-|MeantBodyGyroJerkMeanZ| summary column |  mean of tBodyGyroJerkMeanZ feature |
-|MeantBodyGyroJerkStdX| summary column |  mean of tBodyGyroJerkStdX feature |
-|MeantBodyGyroJerkStdY| summary column |  mean of tBodyGyroJerkStdY feature |
-|MeantBodyGyroJerkStdZ| summary column |  mean of tBodyGyroJerkStdZ feature |
-|MeantBodyAccMagMean| summary column |  mean of tBodyAccMagMean feature |
-|MeantBodyAccMagStd| summary column |  mean of tBodyAccMagStd feature |
-|MeantGravityAccMagMean| summary column |  mean of tGravityAccMagMean feature |
-|MeantGravityAccMagStd| summary column |  mean of tGravityAccMagStd feature |
-|MeantBodyAccJerkMagMean| summary column |  mean of tBodyAccJerkMagMean feature |
-|MeantBodyAccJerkMagStd| summary column |  mean of tBodyAccJerkMagStd feature |
-|MeantBodyGyroMagMean| summary column |  mean of tBodyGyroMagMean feature |
-|MeantBodyGyroMagStd| summary column |  mean of tBodyGyroMagStd feature |
-|MeantBodyGyroJerkMagMean| summary column |  mean of tBodyGyroJerkMagMean feature |
-|MeantBodyGyroJerkMagStd| summary column |  mean of tBodyGyroJerkMagStd feature |
-|MeanfBodyAccMeanX| summary column |  mean of fBodyAccMeanX feature |
-|MeanfBodyAccMeanY| summary column |  mean of fBodyAccMeanY feature |
-|MeanfBodyAccMeanZ| summary column |  mean of fBodyAccMeanZ feature |
-|MeanfBodyAccStdX| summary column |  mean of fBodyAccStdX feature |
-|MeanfBodyAccStdY| summary column |  mean of fBodyAccStdY feature |
-|MeanfBodyAccStdZ| summary column |  mean of fBodyAccStdZ feature |
-|MeanfBodyAccJerkMeanX| summary column |  mean of fBodyAccJerkMeanX feature |
-|MeanfBodyAccJerkMeanY| summary column |  mean of fBodyAccJerkMeanY feature |
-|MeanfBodyAccJerkMeanZ| summary column |  mean of fBodyAccJerkMeanZ feature |
-|MeanfBodyAccJerkStdX| summary column |  mean of fBodyAccJerkStdX feature |
-|MeanfBodyAccJerkStdY| summary column |  mean of fBodyAccJerkStdY feature |
-|MeanfBodyAccJerkStdZ| summary column |  mean of fBodyAccJerkStdZ feature |
-|MeanfBodyGyroMeanX| summary column |  mean of fBodyGyroMeanX feature |
-|MeanfBodyGyroMeanY| summary column |  mean of fBodyGyroMeanY feature |
-|MeanfBodyGyroMeanZ| summary column |  mean of fBodyGyroMeanZ feature |
-|MeanfBodyGyroStdX| summary column |  mean of fBodyGyroStdX feature |
-|MeanfBodyGyroStdY| summary column |  mean of fBodyGyroStdY feature |
-|MeanfBodyGyroStdZ| summary column |  mean of fBodyGyroStdZ feature |
-|MeanfBodyAccMagMean| summary column |  mean of fBodyAccMagMean feature |
-|MeanfBodyAccMagStd| summary column |  mean of fBodyAccMagStd feature |
-|MeanfBodyBodyAccJerkMagMean| summary column |  mean of fBodyBodyAccJerkMagMean feature |
-|MeanfBodyBodyAccJerkMagStd| summary column |  mean of fBodyBodyAccJerkMagStd feature |
-|MeanfBodyBodyGyroMagMean| summary column |  mean of fBodyBodyGyroMagMean feature |
-|MeanfBodyBodyGyroMagStd| summary column |  mean of fBodyBodyGyroMagStd feature |
-|MeanfBodyBodyGyroJerkMagMean| summary column |  mean of fBodyBodyGyroJerkMagMean feature |
-|MeanfBodyBodyGyroJerkMagStd| summary column |  mean of fBodyBodyGyroJerkMagStd feature |
+| activityLabel   | group column   | The label of an activity that was done by a subject |
+| subjectKey | group column  | The id of a subject |
+|meanTBodyAccMeanX| summary column |  mean of tBodyAccMeanX feature |
+|meanTBodyAccMeanY| summary column |  mean of tBodyAccMeanY feature |
+|meanTBodyAccMeanZ| summary column |  mean of tBodyAccMeanZ feature |
+|meanTBodyAccStdX| summary column |  mean of tBodyAccStdX feature |
+|meanTBodyAccStdY| summary column |  mean of tBodyAccStdY feature |
+|meanTBodyAccStdZ| summary column |  mean of tBodyAccStdZ feature |
+|meanTGravityAccMeanX| summary column |  mean of tGravityAccMeanX feature |
+|meanTGravityAccMeanY| summary column |  mean of tGravityAccMeanY feature |
+|meanTGravityAccMeanZ| summary column |  mean of tGravityAccMeanZ feature |
+|meanTGravityAccStdX| summary column |  mean of tGravityAccStdX feature |
+|meanTGravityAccStdY| summary column |  mean of tGravityAccStdY feature |
+|meanTGravityAccStdZ| summary column |  mean of tGravityAccStdZ feature |
+|meanTBodyAccJerkMeanX| summary column |  mean of tBodyAccJerkMeanX feature |
+|meanTBodyAccJerkMeanY| summary column |  mean of tBodyAccJerkMeanY feature |
+|meanTBodyAccJerkMeanZ| summary column |  mean of tBodyAccJerkMeanZ feature |
+|meanTBodyAccJerkStdX| summary column |  mean of tBodyAccJerkStdX feature |
+|meanTBodyAccJerkStdY| summary column |  mean of tBodyAccJerkStdY feature |
+|meanTBodyAccJerkStdZ| summary column |  mean of tBodyAccJerkStdZ feature |
+|meanTBodyGyroMeanX| summary column |  mean of tBodyGyroMeanX feature |
+|meanTBodyGyroMeanY| summary column |  mean of tBodyGyroMeanY feature |
+|meanTBodyGyroMeanZ| summary column |  mean of tBodyGyroMeanZ feature |
+|meanTBodyGyroStdX| summary column |  mean of tBodyGyroStdX feature |
+|meanTBodyGyroStdY| summary column |  mean of tBodyGyroStdY feature |
+|meanTBodyGyroStdZ| summary column |  mean of tBodyGyroStdZ feature |
+|meanTBodyGyroJerkMeanX| summary column |  mean of tBodyGyroJerkMeanX feature |
+|meanTBodyGyroJerkMeanY| summary column |  mean of tBodyGyroJerkMeanY feature |
+|meanTBodyGyroJerkMeanZ| summary column |  mean of tBodyGyroJerkMeanZ feature |
+|meanTBodyGyroJerkStdX| summary column |  mean of tBodyGyroJerkStdX feature |
+|meanTBodyGyroJerkStdY| summary column |  mean of tBodyGyroJerkStdY feature |
+|meanTBodyGyroJerkStdZ| summary column |  mean of tBodyGyroJerkStdZ feature |
+|meanTBodyAccMagMean| summary column |  mean of tBodyAccMagMean feature |
+|meanTBodyAccMagStd| summary column |  mean of tBodyAccMagStd feature |
+|meanTGravityAccMagMean| summary column |  mean of tGravityAccMagMean feature |
+|meanTGravityAccMagStd| summary column |  mean of tGravityAccMagStd feature |
+|meanTBodyAccJerkMagMean| summary column |  mean of tBodyAccJerkMagMean feature |
+|meanTBodyAccJerkMagStd| summary column |  mean of tBodyAccJerkMagStd feature |
+|meanTBodyGyroMagMean| summary column |  mean of tBodyGyroMagMean feature |
+|meanTBodyGyroMagStd| summary column |  mean of tBodyGyroMagStd feature |
+|meanTBodyGyroJerkMagMean| summary column |  mean of tBodyGyroJerkMagMean feature |
+|meanTBodyGyroJerkMagStd| summary column |  mean of tBodyGyroJerkMagStd feature |
+|meanFBodyAccMeanX| summary column |  mean of fBodyAccMeanX feature |
+|meanFBodyAccMeanY| summary column |  mean of fBodyAccMeanY feature |
+|meanFBodyAccMeanZ| summary column |  mean of fBodyAccMeanZ feature |
+|meanFBodyAccStdX| summary column |  mean of fBodyAccStdX feature |
+|meanFBodyAccStdY| summary column |  mean of fBodyAccStdY feature |
+|meanFBodyAccStdZ| summary column |  mean of fBodyAccStdZ feature |
+|meanFBodyAccJerkMeanX| summary column |  mean of fBodyAccJerkMeanX feature |
+|meanFBodyAccJerkMeanY| summary column |  mean of fBodyAccJerkMeanY feature |
+|meanFBodyAccJerkMeanZ| summary column |  mean of fBodyAccJerkMeanZ feature |
+|meanFBodyAccJerkStdX| summary column |  mean of fBodyAccJerkStdX feature |
+|meanFBodyAccJerkStdY| summary column |  mean of fBodyAccJerkStdY feature |
+|meanFBodyAccJerkStdZ| summary column |  mean of fBodyAccJerkStdZ feature |
+|meanFBodyGyroMeanX| summary column |  mean of fBodyGyroMeanX feature |
+|meanFBodyGyroMeanY| summary column |  mean of fBodyGyroMeanY feature |
+|meanFBodyGyroMeanZ| summary column |  mean of fBodyGyroMeanZ feature |
+|meanFBodyGyroStdX| summary column |  mean of fBodyGyroStdX feature |
+|meanFBodyGyroStdY| summary column |  mean of fBodyGyroStdY feature |
+|meanFBodyGyroStdZ| summary column |  mean of fBodyGyroStdZ feature |
+|meanFBodyAccMagMean| summary column |  mean of fBodyAccMagMean feature |
+|meanFBodyAccMagStd| summary column |  mean of fBodyAccMagStd feature |
+|meanFBodyBodyAccJerkMagMean| summary column |  mean of fBodyBodyAccJerkMagMean feature |
+|meanFBodyBodyAccJerkMagStd| summary column |  mean of fBodyBodyAccJerkMagStd feature |
+|meanFBodyBodyGyroMagMean| summary column |  mean of fBodyBodyGyroMagMean feature |
+|meanFBodyBodyGyroMagStd| summary column |  mean of fBodyBodyGyroMagStd feature |
+|meanFBodyBodyGyroJerkMagMean| summary column |  mean of fBodyBodyGyroJerkMagMean feature |
+|meanFBodyBodyGyroJerkMagStd| summary column |  mean of fBodyBodyGyroJerkMagStd feature |

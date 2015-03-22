@@ -12,50 +12,54 @@ library(dplyr)
 
 # For both test and training data set the subject mappings, 
 # measurements and activity labels are combined into one data set
-activityLabels <- read.table("./UCI HAR Dataset/activity_labels.txt", sep = " ", header = FALSE, col.names = c("activity_label_key","activity_label")) 
+activityLabels <- read.table("./UCI HAR Dataset/activity_labels.txt", sep = " ", header = FALSE, col.names = c("activityLabelKey","activityLabel")) 
 
 # feature labels are loaded and filtered down to the required labels/column positions
-featureLabels <- read.table("./UCI HAR Dataset/features.txt", sep = " ", header = FALSE, col.names = c("feature_key","feature_label")) 
-requiredFeatureLables <- grep("mean\\(\\)|std\\(\\)",featureLabels$feature_label)
+featureLabels <- read.table("./UCI HAR Dataset/features.txt", sep = " ", header = FALSE, col.names = c("featureKey","featureLabel")) 
+requiredFeatureLables <- grep("mean\\(\\)|std\\(\\)",featureLabels$featureLabel)
 featureLabels <- featureLabels[requiredFeatureLables,]
-featureLabels$feature_label <- sub("-mean\\(\\)-","Mean",featureLabels$feature_label)
-featureLabels$feature_label <- sub("-mean\\(\\)","Mean",featureLabels$feature_label)
-featureLabels$feature_label <- sub("-std\\(\\)-","Std",featureLabels$feature_label)
-featureLabels$feature_label <- sub("-std\\(\\)","Std",featureLabels$feature_label)
+featureLabels$featureLabel <- sub("-mean\\(\\)-","Mean",featureLabels$featureLabel)
+featureLabels$featureLabel <- sub("-mean\\(\\)","Mean",featureLabels$featureLabel)
+featureLabels$featureLabel <- sub("-std\\(\\)-","Std",featureLabels$featureLabel)
+featureLabels$featureLabel <- sub("-std\\(\\)","Std",featureLabels$featureLabel)
 
 # Loading and filtering of the test data. The results are merged with the loaded subject ids
 # and augmented by the activity labels.
-testSubjects <- read.table("./UCI HAR Dataset/test/subject_test.txt", header = FALSE, col.names = c("subject_key"))
+testSubjects <- read.table("./UCI HAR Dataset/test/subject_test.txt", header = FALSE, col.names = c("subjectKey"))
 testSet <- read.table("./UCI HAR Dataset/test/X_test.txt", header = FALSE)
-testSet <- testSet[,featureLabels$feature_key]
-colnames(testSet) <- featureLabels$feature_label
-testSet$subject_key <- testSubjects$subject_key
+testSet <- testSet[,featureLabels$featureKey]
+colnames(testSet) <- featureLabels$featureLabel
+testSet$subjectKey <- testSubjects$subjectKey
 
-testActivities <- read.table("./UCI HAR Dataset/test/y_test.txt", header = FALSE, col.names = c("activity_label_key"))
-testSet$activity_label_key <- testActivities$activity_label_key
-testSet <- inner_join(testSet, activityLabels, by = "activity_label_key")
+testActivities <- read.table("./UCI HAR Dataset/test/y_test.txt", header = FALSE, col.names = c("activityLabelKey"))
+testSet$activityLabelKey <- testActivities$activityLabelKey
+testSet <- inner_join(testSet, activityLabels, by = "activityLabelKey")
 
 # Repeating the same steps for the training data
-trainingSubjects <- read.table("./UCI HAR Dataset/train/subject_train.txt", header = FALSE, col.names = c("subject_key"))
+trainingSubjects <- read.table("./UCI HAR Dataset/train/subject_train.txt", header = FALSE, col.names = c("subjectKey"))
 trainingSet <- read.table("./UCI HAR Dataset/train/X_train.txt", header = FALSE)
-trainingSet <- trainingSet[,featureLabels$feature_key]
-colnames(trainingSet) <- featureLabels$feature_label
-trainingSet$subject_key <- trainingSubjects$subject_key
+trainingSet <- trainingSet[,featureLabels$featureKey]
+colnames(trainingSet) <- featureLabels$featureLabel
+trainingSet$subjectKey <- trainingSubjects$subjectKey
 
-trainActivities <- read.table("./UCI HAR Dataset/train/y_train.txt", header = FALSE, col.names = c("activity_label_key"))
-trainingSet$activity_label_key <- trainActivities$activity_label_key
-trainingSet <- inner_join(trainingSet, activityLabels, by = "activity_label_key")
+trainActivities <- read.table("./UCI HAR Dataset/train/y_train.txt", header = FALSE, col.names = c("activityLabelKey"))
+trainingSet$activityLabelKey <- trainActivities$activityLabelKey
+trainingSet <- inner_join(trainingSet, activityLabels, by = "activityLabelKey")
 
 
 # Test and training data frames have the same column layout and are unioned
 runAnalysisData <- union(testSet, trainingSet)
-runAnalysisData$subject_key <- factor(runAnalysisData$subject_key)
+runAnalysisData$subjectKey <- factor(runAnalysisData$subjectKey)
 
 # Measurements on the mean and standard deviation of each variable 
 # for each activity and each subject. The column names of the
 # resulting data frame are updated to be more telling.
-subjectActivityAnalysis <- runAnalysisData %>% group_by(activity_label, subject_key) %>% summarise_each(funs(mean),1:66)
-colnames(subjectActivityAnalysis)[3:68] <- lapply(colnames(subjectActivityAnalysis)[3:68], function(x) paste("Mean",x, sep=""))
+subjectActivityAnalysis <- runAnalysisData %>% group_by(activityLabel, subjectKey) %>% summarise_each(funs(mean),1:66)
+colUpdate <- function(colName) {
+  colName <- paste(toupper(substr(colName, 1, 1)), substr(colName, 2, nchar(colName)), sep="")
+  paste("mean",colName, sep="")
+}  
+colnames(subjectActivityAnalysis)[3:68] <- lapply(colnames(subjectActivityAnalysis)[3:68], colUpdate)
 
 # Writing out the results
 write.table(subjectActivityAnalysis, file = "./subjectActivityAnalysis.txt", row.name=FALSE)
